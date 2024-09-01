@@ -33,7 +33,7 @@ userSchema.methods.generateAccessToken=function(){
 		_id:this._id,
 		email:this.email
 			
-	},process.env.ACCESS_TOKEN_SECRET,{expiresIn:'10s'});
+	},process.env.ACCESS_TOKEN_SECRET,{expiresIn:'1min'});
 }
 
 export const User=mongoose.model('User',userSchema);

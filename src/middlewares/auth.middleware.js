@@ -14,6 +14,6 @@ export const verifyJwt =async (req,res,next)=>{
 		next();
 	}
 	catch(err){
-		res.status(401).send("something went wrong")
+		return res.status(401).send("something went wrong");
 	}
 }

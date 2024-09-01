@@ -59,11 +59,17 @@ const graphDataHourly=async(cityCode)=>{
 	const finalData=[{"id":"india","color":"hsl(170, 70%, 50%)",base,data}];
 	return finalData;
 }
-
+const geoPosition=asyncHandler(async (req,res)=>{
+	const {lat,lon}=req.query;
+	const data=await fetch(`${process.env.GEO_POSITION}?apikey=${process.env.API_KEY}&q=${lat},${lon}`)
+	const fdata=await data.json();
+	res.status(200).json(fdata);
+})
 
 export {autocomplete,
 	currentConditions,
 	sevenDayforecast,
 	TopLargeCities,
-	graphDataHourly
+	graphDataHourly,
+	geoPosition,
 }

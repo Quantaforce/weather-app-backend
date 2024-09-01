@@ -2,6 +2,7 @@ import { User } from "../models/user.models.js";
 import {verifyJwt} from '../middlewares/auth.middleware.js';
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcrypt";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const handleSignup=async (req,res)=>{
 	try{
@@ -67,10 +68,12 @@ const handleLogout=async(req,res)=>{
 	});
 	return res.status(200).send("user logged out")
 }
-const handleRefresh=async(req,res)=>{
+const handleRefresh=asyncHandler(async(req,res)=>{
 	const refreshToken=req.cookies.jwt;
 	console.log(refreshToken);
-	if(!refreshToken)res.status(402).send('refresh Token does not exit');
+	if(!refreshToken){
+		return res.status(402).send('refresh Token does not exit');
+	}
 	const decodedToken=jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET);
 	console.log(decodedToken);
 	const email=decodedToken.email;
@@ -91,8 +94,7 @@ const handleRefresh=async(req,res)=>{
 	})
 	
 	
-};
-
+});
 export {handleLogin, 
 	handleSignup,
 	handleLogout,
