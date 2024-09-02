@@ -9,9 +9,12 @@ import {verifyJwt} from './middlewares/auth.middleware.js';
 import userRouter from './routes/user.routes.js'
 import weatherApi from './routes/weather.routes.js'
 import cookieParser from 'cookie-parser';
+import cors from 'cors'
+import { corsOptions } from './config/corsOptions.js';
 connectDB();
 
 const app=express();
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.get('/',(req,res)=>{

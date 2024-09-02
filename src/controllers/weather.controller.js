@@ -22,6 +22,7 @@ const sevenDayforecast= asyncHandler(async (req,res)=>{
 	const {cityCode}= req.params;
 	const data=await fetch(`${process.env.FIVE_DAY_FORECAST}+${cityCode}?apikey=${process.env.API_KEY}&details=true&metric=true`);
 	const jsonData=await data.json();
+	console.log('sevenDay',jsonData)
 	return res.status(201).json(jsonData);
 })
 const TopLargeCities=  asyncHandler(async(req,res)=>{

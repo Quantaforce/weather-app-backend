@@ -34,9 +34,10 @@ const handleLogin=async (req,res)=>{
 	if(!credCheck)
 		return res.send("incorrect password");
 	const refreshToken=user.generateRefreshToken();
-	res.cookie('jwt',refreshToken,{httpOnly:true,
+	res.cookie('jwt',refreshToken,{
+		httpOnly:true,
 		secure:true,
-		sameSite:'Lax',
+		sameSite:'None',
 
 		});
 	const accessToken=user.generateAccessToken();	
@@ -70,12 +71,10 @@ const handleLogout=async(req,res)=>{
 }
 const handleRefresh=asyncHandler(async(req,res)=>{
 	const refreshToken=req.cookies.jwt;
-	console.log(refreshToken);
 	if(!refreshToken){
 		return res.status(402).send('refresh Token does not exit');
 	}
 	const decodedToken=jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET);
-	console.log(decodedToken);
 	const email=decodedToken.email;
 	const user=await User.findOne({email});
 	const newtoken=user.generateRefreshToken();
