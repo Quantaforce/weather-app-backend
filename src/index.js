@@ -50,6 +50,10 @@ app.get('/api/info',verifyJwt,(req,res)=>{
 		name:"negi"
 	}])
 })
+app.get('/startserver',(req,res)=>{
+	console.log('server running');
+	res.status(200).json({msg:'server running'});
+})
 const port=process.env.PORT||3000;
 app.listen(port,()=>{
 	console.log(`server at ${port}`);
